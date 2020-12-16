@@ -1,0 +1,26 @@
+{% load thumbnail %}
+
+{# meta data #}
+{% block metadescription %}{{ object.meta_description|striptags }}{% endblock %}
+{% block metakeywords %}{{ object.meta_keywords|striptags }}{% endblock %}
+{% block pagetitle %}{{ object.title|title|striptags }}{% endblock %}
+
+{# content #}
+{% block content %}
+    <h1>{{ object.title }}</h1>
+    <ul>
+        {% for photo in object.photo_set.all %}
+            <li>
+                <a href="{% thumbnail photo.image "2800" crop="center" as im %}{{ im.url }}{% endthumbnail %}" title="{{ photo.caption }}" class="gallery" rel="gallery">
+                    {% thumbnail photo.image "296x192" crop="center" as im %}
+                        <img src="{{ im.url }}" alt="" />
+                    {% endthumbnail %}
+                    {{ photo.caption|safe|truncatewords:3 }}
+                </a>
+                <p>
+                    <a href="{{ photo.image.url }}" rel="download">Download this image.</a>
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

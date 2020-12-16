@@ -1,0 +1,14 @@
+{% load thumbnail %}
+
+<ul>
+    {% spaceless %}{% for list in object_list %}
+        <li>
+            <a href="{{ list.get_absolute_url }}">
+                {% thumbnail photo.albumcover "296x192" crop="center" as im %}
+                    <img src="{{ im.url }}" alt="" />
+                {% endthumbnail %}
+                {{ list.title|truncatewords:3 }}
+            </a>
+        </li>
+    {% endfor %}{% endspaceless %}
+</ul>
